@@ -23,6 +23,9 @@ public class Post extends Timestamped {
     @Column(nullable = false, length = 31)
     private String title;
 
+    @Column
+    private Long likeCount = 0L;
+
     @ManyToOne
     @JoinColumn(name = "userId", updatable = false, nullable = false)
     private User user;
@@ -30,7 +33,7 @@ public class Post extends Timestamped {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Comment> commentList = new ArrayList<>();
 
 
