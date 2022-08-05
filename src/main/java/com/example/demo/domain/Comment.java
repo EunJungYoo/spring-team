@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Getter
@@ -20,6 +22,9 @@ public class Comment extends Timestamped{
     @Column(name = "commentId", nullable = false, unique = true)
     private Long commentId;
 
+    @Column
+    private Long likeCount = 0L;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "postId",updatable = false)
@@ -31,6 +36,11 @@ public class Comment extends Timestamped{
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy ="comment")
+    private List<Reply> replyList = new ArrayList<>();
+
+
 
 
     public Comment(String content, Post post, User user) {

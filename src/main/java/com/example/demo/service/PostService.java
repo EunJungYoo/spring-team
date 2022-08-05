@@ -5,6 +5,7 @@ import com.example.demo.domain.dto.ResponseDto;
 import com.example.demo.domain.Post;
 import com.example.demo.domain.User;
 import com.example.demo.repository.PostRepository;
+import com.example.demo.repository.ShowPost;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.validator.AuthValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,13 +31,15 @@ public class PostService {
 
 
     @Transactional
-    public ResponseDto<List<Post>> getPostList() {
-        return ResponseDto.success(postRepository.findAll());
+    public ResponseDto<?> getPostList() {
+        List<ShowPost> postList = postRepository.findAllByOrderByCreatedAtDesc();
+        return ResponseDto.success(postList);
     }
 
     @Transactional
-    public ResponseDto<Post> getPost(Long id) {
-        return ResponseDto.success(postRepository.findById(id).get());
+    public ResponseDto<?> getPost(Long id) {
+        ShowPost postList = postRepository.findByPostIdOrderByCreatedAtDesc(id).get();
+        return ResponseDto.success(postList);
     }
 
     @Transactional

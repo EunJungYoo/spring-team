@@ -1,5 +1,7 @@
 package com.example.demo.domain;
 
+import com.example.demo.domain.LikeDomain.CommentLike;
+import com.example.demo.domain.LikeDomain.PostLike;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
@@ -26,6 +28,18 @@ public class User {
     @JsonIgnore
     @Column(nullable = false, length = 255)
     private String password;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Comment> commentList;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Post> postList;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<CommentLike> commentLikeList;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<PostLike> postLikeList;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

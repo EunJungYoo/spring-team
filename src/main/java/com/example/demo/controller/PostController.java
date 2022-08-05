@@ -22,13 +22,13 @@ public class PostController {
 
     // 전체 게시글 조회
     @GetMapping("/api/posts")
-    public ResponseDto<List<Post>> getPostList(){
+    public ResponseDto<?> getPostList(){
         return postService.getPostList();
     }
 
     // 게시글 상세 조회
     @GetMapping("/api/posts/{postId}")
-    public ResponseDto<Post> getPost(@PathVariable Long postId){
+    public ResponseDto<?> getPost(@PathVariable Long postId){
         return postService.getPost(postId);
     }
 
