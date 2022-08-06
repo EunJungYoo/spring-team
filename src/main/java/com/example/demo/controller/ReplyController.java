@@ -1,9 +1,14 @@
 package com.example.demo.controller;
 
+import com.example.demo.domain.Comment;
+import com.example.demo.domain.dto.CommentRequestDto;
+import com.example.demo.domain.dto.ReplyRequestDto;
+import com.example.demo.domain.dto.ResponseDto;
 import com.example.demo.service.ReplyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @RestController
 public class ReplyController {
@@ -14,6 +19,22 @@ public class ReplyController {
     public ReplyController(ReplyService replyService) {
         this.replyService = replyService;
     }
-//    @GetMapping("/api/comments/{postId}")
 
+    //대댓글 조회
+    @GetMapping("/api/replys/{postId}")
+    public ResponseDto<Object> getCommentList(@PathVariable Long postId) {
+        return replyService.getReplyList(postId);
+    }
+
+    //대댓글 작성
+    @PostMapping("/api/auth/replys")
+    public ResponseDto<Comment> commentReply(@RequestBody ReplyRequestDto replyRequestDto, Principal principal){
+        return replyService.commentReply(replyRequestDto, principal);
+    }
+    //대댓글 수정
+    @PutMapping("/api/auth/replys/{replyID}")
+
+
+    //대댓글 삭제
+    @DeleteMapping("/api/auth/replys/{replyID}")
 }
