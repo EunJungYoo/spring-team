@@ -18,18 +18,18 @@ import java.util.List;
 public class Comment extends Timestamped{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "commentId", nullable = false, unique = true)
     private Long commentId;
 
     @Column
     private Long likeCount = 0L;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "postId",updatable = false)
     private Post post;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "userId",updatable = false)
     private User user;

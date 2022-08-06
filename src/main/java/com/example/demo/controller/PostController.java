@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.domain.dto.PostRequestDto;
 import com.example.demo.domain.dto.ResponseDto;
 import com.example.demo.domain.Post;
+import com.example.demo.domain.dto.likeDto.PostLikeDto;
 import com.example.demo.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

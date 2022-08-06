@@ -1,6 +1,7 @@
 package com.example.demo.domain;
 
 import com.example.demo.domain.dto.PostRequestDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,7 +17,7 @@ import java.util.List;
 public class Post extends Timestamped {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "postId", nullable = false, unique = true)
     private Long postId;
 
@@ -26,6 +27,7 @@ public class Post extends Timestamped {
     @Column
     private Long likeCount = 0L;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "userId", updatable = false, nullable = false)
     private User user;
