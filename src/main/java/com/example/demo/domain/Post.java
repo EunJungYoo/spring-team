@@ -1,6 +1,7 @@
 package com.example.demo.domain;
 
 import com.example.demo.domain.dto.PostRequestDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,6 +27,7 @@ public class Post extends Timestamped {
     @Column
     private Long likeCount = 0L;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "userId", updatable = false, nullable = false)
     private User user;

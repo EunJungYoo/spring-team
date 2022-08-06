@@ -1,9 +1,11 @@
 package com.example.demo.service;
 
+import com.example.demo.domain.Comment;
 import com.example.demo.domain.dto.PostRequestDto;
 import com.example.demo.domain.dto.ResponseDto;
 import com.example.demo.domain.Post;
 import com.example.demo.domain.User;
+import com.example.demo.repository.CommentRepository;
 import com.example.demo.repository.PostRepository;
 import com.example.demo.repository.ShowPost;
 import com.example.demo.repository.UserRepository;
@@ -13,7 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PostService {
@@ -21,6 +25,8 @@ public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final AuthValidator authValidator;
+
+
 
     @Autowired
     public PostService(PostRepository postRepository, UserRepository userRepository, AuthValidator authValidator) {
@@ -38,7 +44,7 @@ public class PostService {
 
     @Transactional
     public ResponseDto<?> getPost(Long id) {
-        ShowPost postList = postRepository.findByPostIdOrderByCreatedAtDesc(id).get();
+        Post postList = postRepository.findById(id).get();
         return ResponseDto.success(postList);
     }
 
@@ -49,6 +55,7 @@ public class PostService {
         Post post = new Post(postRequestDto, user);
         return ResponseDto.success(postRepository.save(post));
     }
+
 
     @Transactional
     public ResponseDto<Post> editPost(Long id, PostRequestDto postRequestDto, Principal principal) {
@@ -63,6 +70,7 @@ public class PostService {
 
     }
 
+
     @Transactional
     public ResponseDto<String> deletePost(Long id, Principal principal) {
         Post post = postRepository.findById(id).get();
@@ -75,4 +83,5 @@ public class PostService {
         } else throw new IllegalArgumentException("게시물을 삭제할 권한이 없습니다.");
 
     }
+
 }
