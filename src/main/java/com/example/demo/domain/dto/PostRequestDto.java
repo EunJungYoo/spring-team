@@ -11,5 +11,6 @@ import lombok.Setter;
 public class PostRequestDto {
     private String content;
     private String title;
+    private String imageUrl;
 
 }

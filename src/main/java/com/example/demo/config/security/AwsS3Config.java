@@ -12,10 +12,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AwsS3Config {
 
-    @Value("${cloud.asw.credential.access-key}")
+    @Value("${cloud.aws.credentials.access-key}")
     private String accessKey;
 
-    @Value("${cloud.asw.credential.secret-key}")
+    @Value("${cloud.aws.credentials.secret-key}")
     private String secretKey;
 
     @Value("${cloud.aws.region.static}")
@@ -35,4 +35,7 @@ public class AwsS3Config {
                 .withRegion(region)
                 .build();
     }
+
+
+
 }

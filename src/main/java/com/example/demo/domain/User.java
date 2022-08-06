@@ -29,17 +29,17 @@ public class User {
     @Column(nullable = false, length = 255)
     private String password;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="user")
-    private List<Comment> commentList;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="user")
+    private Set<Comment> commentList;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="user")
-    private List<Post> postList;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="user")
+    private Set<Post> postList;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="user")
-    private List<CommentLike> commentLikeList;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="user")
+    private Set<CommentLike> commentLikeList;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="user")
-    private List<PostLike> postLikeList;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="user")
+    private Set<PostLike> postLikeList;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
