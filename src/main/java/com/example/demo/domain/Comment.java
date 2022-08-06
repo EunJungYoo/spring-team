@@ -38,7 +38,7 @@ public class Comment extends Timestamped{
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy ="comment")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy ="comment")
     private List<Reply> replyList = new ArrayList<>();
 
 
