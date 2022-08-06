@@ -1,5 +1,7 @@
 package com.example.demo.domain;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,6 +24,8 @@ public class Reply {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
+
+    @JsonIgnore
     @JoinColumn(name = "comment_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private Comment comment;

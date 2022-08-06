@@ -5,6 +5,8 @@ import com.example.demo.domain.dto.LoginRequestDto;
 import com.example.demo.domain.User;
 import com.example.demo.config.security.UserDetailsImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -76,6 +78,9 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 
         UserDetailsImpl user1 = (UserDetailsImpl) authResult.getPrincipal();
         User user = user1.getUser();
+
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
         response.setHeader("Refresh-Token", "refresh_token:" + jwt.makeRefreshToken(user));
         response.setHeader("Access-Token", "auth_token:" + jwt.makeAuthToken(user));

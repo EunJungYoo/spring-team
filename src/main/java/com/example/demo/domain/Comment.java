@@ -30,6 +30,7 @@ public class Comment extends Timestamped{
     @JoinColumn(name = "postId",updatable = false)
     private Post post;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "userId",updatable = false)
     private User user;
@@ -37,9 +38,9 @@ public class Comment extends Timestamped{
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy ="comment")
-    private List<Reply> replyList = new ArrayList<>();
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy ="comment")
+    private List<Reply> replyList = new ArrayList<>();
 
 
 
