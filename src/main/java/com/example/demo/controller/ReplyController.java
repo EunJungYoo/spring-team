@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.Comment;
+import com.example.demo.domain.Reply;
 import com.example.demo.domain.dto.CommentRequestDto;
 import com.example.demo.domain.dto.ReplyRequestDto;
 import com.example.demo.domain.dto.ResponseDto;
@@ -28,13 +29,20 @@ public class ReplyController {
 
     //대댓글 작성
     @PostMapping("/api/auth/replys")
-    public ResponseDto<Comment> commentReply(@RequestBody ReplyRequestDto replyRequestDto, Principal principal){
+    public ResponseDto<Reply> commentReply(@RequestBody ReplyRequestDto replyRequestDto, Principal principal){
         return replyService.commentReply(replyRequestDto, principal);
     }
     //대댓글 수정
-    @PutMapping("/api/auth/replys/{replyID}")
-
+    @PutMapping("/api/auth/replys/{replyId}")
+    public ResponseDto<Boolean> editReply(@PathVariable Long replyId,
+                                            @RequestBody ReplyRequestDto replyRequestDto,
+                                            Principal principal){
+        return replyService.editReply(replyId, replyRequestDto, principal);
+    }
 
     //대댓글 삭제
-    @DeleteMapping("/api/auth/replys/{replyID}")
+    @DeleteMapping("/api/auth/replys/{replyId}")
+    public ResponseDto<String> deleteReply(@PathVariable Long replyId, Principal principal){
+        return replyService.deleteReply(replyId, principal);
+    }
 }
