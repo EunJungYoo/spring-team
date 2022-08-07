@@ -14,5 +14,4 @@ public class AwsS3 {
         this.key = key;
         this.path = path;
     }
-
 }

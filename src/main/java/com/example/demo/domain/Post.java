@@ -18,7 +18,6 @@ public class Post extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "postId", nullable = false, unique = true)
     private Long postId;
 
     @Column(nullable = false, length = 31)
@@ -39,7 +38,7 @@ public class Post extends Timestamped {
     @Column(nullable = true)
     private String imageUrl;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<Comment> commentList = new ArrayList<>();
 
 

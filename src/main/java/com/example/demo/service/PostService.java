@@ -8,7 +8,7 @@ import com.example.demo.domain.imageDomain.AwsS3;
 import com.example.demo.repository.PostRepository;
 import com.example.demo.repository.ShowPost;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.service.image.AmazonS3Service;
+import com.example.demo.service.fileUpload.AmazonS3Service;
 import com.example.demo.service.validator.AuthValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.Principal;
-import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -32,9 +31,7 @@ public class PostService {
     private final String amazonS3Domain = "https://springblog.s3.ap-northeast-2.amazonaws.com/";
 
     @Autowired
-    public PostService(PostRepository postRepository,
-                       UserRepository userRepository,
-                       AuthValidator authValidator,
+    public PostService(PostRepository postRepository, UserRepository userRepository,AuthValidator authValidator,
                        AmazonS3Service amazonS3Service) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
@@ -51,7 +48,7 @@ public class PostService {
 
     @Transactional
     public ResponseDto<?> getPost(Long id) {
-        ShowPost postList = postRepository.findByPostIdOrderByCreatedAtDesc(id).get();
+        Post postList = postRepository.findById(id).get();
         return ResponseDto.success(postList);
     }
 
@@ -60,8 +57,6 @@ public class PostService {
                                       MultipartFile multipartFile, Principal principal) throws IOException {
         User user = userRepository.findByUserId(principal.getName());
         AwsS3 image = amazonS3Service.upload(multipartFile, "upload");
-
-
 
         String imageUrl = amazonS3Domain + URLEncoder.encode(image.getKey(), StandardCharsets.US_ASCII);
 

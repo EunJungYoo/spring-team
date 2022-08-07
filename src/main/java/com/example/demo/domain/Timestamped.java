@@ -1,6 +1,5 @@
 package com.example.demo.domain;
 
-import com.example.demo.domain.dto.CommentRequestDto;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
