@@ -40,7 +40,7 @@ public class User {
     private Set<PostLike> postLikeList;
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "userId", foreignKey = @ForeignKey(name = "userId"))
     private Set<Authority> authorities;
 

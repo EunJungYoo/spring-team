@@ -42,8 +42,6 @@ public class Comment extends Timestamped{
     private List<Reply> replyList = new ArrayList<>();
 
 
-
-
     public Comment(String content, Post post, User user) {
         super();
         this.content = content;

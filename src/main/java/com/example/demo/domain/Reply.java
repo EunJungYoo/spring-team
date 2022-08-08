@@ -23,6 +23,7 @@ public class Reply {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
+
     @JoinColumn(name = "comment_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
