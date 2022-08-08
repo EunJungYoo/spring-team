@@ -2,6 +2,7 @@ package com.example.demo.domain;
 
 import com.example.demo.domain.LikeDomain.CommentLike;
 import com.example.demo.domain.LikeDomain.PostLike;
+import com.example.demo.domain.LikeDomain.ReplyLike;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
@@ -32,6 +33,9 @@ public class User {
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy="user")
     private Set<Post> postList;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy="user")
+    private Set<Reply> replyList;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy="user")
     private Set<CommentLike> commentLikeList;
