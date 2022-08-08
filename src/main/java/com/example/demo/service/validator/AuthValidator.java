@@ -1,6 +1,5 @@
 package com.example.demo.service.validator;
 
-import com.example.demo.domain.Post;
 import com.example.demo.domain.User;
 import org.springframework.stereotype.Component;
 

@@ -1,14 +1,15 @@
 package com.example.demo.controller;
 
+import com.example.demo.domain.Post;
 import com.example.demo.domain.dto.PostRequestDto;
 import com.example.demo.domain.dto.ResponseDto;
-import com.example.demo.domain.Post;
 import com.example.demo.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
-import java.util.List;
 
 @RestController
 public class PostController {
@@ -34,8 +35,12 @@ public class PostController {
 
     // 게시글 작성
     @PostMapping("/api/auth/posts")
-    public ResponseDto<Post> postPost(@RequestBody PostRequestDto postRequestDto, Principal principal) {
-        return postService.postPost(postRequestDto, principal);
+    public ResponseDto<Post> postPost(@RequestPart(value = "postInfo")
+                                          PostRequestDto postRequestDto,
+                                      @RequestPart(value = "file")
+                                      MultipartFile multipartFile,
+                                      Principal principal) throws IOException {
+        return postService.postPost(postRequestDto, multipartFile, principal);
     }
 
     // 게시글 수정

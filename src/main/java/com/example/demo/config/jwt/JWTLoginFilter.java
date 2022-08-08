@@ -70,11 +70,10 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
     }
 
     @Override
-    protected void successfulAuthentication(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            FilterChain chain,
-            Authentication authResult) throws IOException, ServletException {
+    protected void successfulAuthentication(HttpServletRequest request,
+                                            HttpServletResponse response,
+                                            FilterChain chain,
+                                            Authentication authResult) throws IOException, ServletException {
 
         UserDetailsImpl user1 = (UserDetailsImpl) authResult.getPrincipal();
         User user = user1.getUser();
@@ -86,7 +85,7 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
         response.setHeader("Access-Token", "auth_token:" + jwt.makeAuthToken(user));
         response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 
-        response.getOutputStream().write(objectMapper.writeValueAsBytes(user));
+        response.getOutputStream().write(objectMapper.writeValueAsBytes(user.getUserId()));
 
     }
 
