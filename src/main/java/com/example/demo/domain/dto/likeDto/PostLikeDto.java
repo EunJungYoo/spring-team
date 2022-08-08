@@ -1,11 +1,23 @@
 package com.example.demo.domain.dto.likeDto;
 
+import com.example.demo.domain.Post;
+import com.example.demo.domain.User;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+
+
 
 @Data
-@RequiredArgsConstructor
 public class PostLikeDto {
-    private String user_id;
-    private Long post_id;
+    private User user;
+    private Post post;
+
+    public PostLikeDto() {
+    }
+
+    public PostLikeDto(User user, Post post) {
+        this.user = user;
+        this.post = post;
+    }
+
+
 }

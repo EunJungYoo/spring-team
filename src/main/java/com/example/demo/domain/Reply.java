@@ -17,7 +17,7 @@ public class Reply {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long replyId;
 
     @JsonIgnore
     @JoinColumn(name = "member_id", nullable = false)

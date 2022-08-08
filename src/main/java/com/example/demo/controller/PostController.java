@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.List;
 
 @RestController
 public class PostController {
@@ -52,6 +51,12 @@ public class PostController {
     @DeleteMapping("/api/auth/posts/{id}")
     public ResponseDto<String> deletePost(@PathVariable Long id, Principal principal){
         return postService.deletePost(id, principal);
+    }
+
+    //좋아요 등록
+    @GetMapping("/api/posts/addlikes/{id}")
+    public String addLike(@PathVariable Long id, Principal principal) {
+        return postService.addLike(id, principal);
     }
 
 }

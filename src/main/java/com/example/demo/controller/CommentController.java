@@ -45,5 +45,8 @@ public class CommentController {
         return commentService.deleteComment(commentId, principal);
     }
 
+    //좋아요 등록, 삭제 ->get
+
+
 
 }

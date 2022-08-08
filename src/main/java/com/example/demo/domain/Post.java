@@ -1,6 +1,7 @@
 package com.example.demo.domain;
 
 import com.example.demo.domain.dto.PostRequestDto;
+import com.example.demo.domain.dto.likeDto.PostLikeDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,7 +36,7 @@ public class Post extends Timestamped {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<Comment> commentList = new ArrayList<>();
 
 
@@ -52,7 +53,15 @@ public class Post extends Timestamped {
     }
 
 
+    public void addLike(PostLikeDto postLikeDto) {
+        this.user = postLikeDto.getUser();
+        this.postId = postLikeDto.getPost().getPostId();
+        likeCount++;
+    }
 
-
-
+    public void deleteLike(PostLikeDto postLikeDto) {
+        this.user = postLikeDto.getUser();
+        this.postId = postLikeDto.getPost().getPostId();
+        likeCount--;
+    }
 }

@@ -8,32 +8,24 @@ import com.example.demo.domain.User;
 import com.example.demo.repository.CommentRepository;
 import com.example.demo.repository.PostRepository;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.repository.likeRepository.CommentLikeRepository;
 import com.example.demo.service.validator.AuthValidator;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 
+@RequiredArgsConstructor
 @Service
 public class CommentService {
 
     private final CommentRepository commentRepository;
-    private final PostRepository postRepository;
-    private final UserRepository userRepository;
-    private final AuthValidator authValidator;
+    private final CommentLikeRepository commentLikeRepository;
+    private final PostRepository postRepository; //포스트 아이디 갖고오는
+    private final UserRepository userRepository; //유저 아이디 갖고오는->String임
+    private final AuthValidator authValidator; //토큰확인인듯
 
-
-    public CommentService(CommentRepository commentRepository,
-                          PostRepository postRepository,
-                          UserRepository userRepository,
-                          AuthValidator authValidator
-    ) {
-        this.commentRepository = commentRepository;
-        this.postRepository = postRepository;
-        this.userRepository = userRepository;
-        this.authValidator = authValidator;
-    }
 
     public ResponseDto<Object> getCommentList(Long id) {
         Post post = postRepository.findById(id).get();
@@ -76,6 +68,9 @@ public class CommentService {
             return ResponseDto.success("댓글을 삭제했습니다.");
         } else throw new IllegalArgumentException("댓글을 삭제할 권한이 없습니다.");
     }
+
+
+
 }
 
 // post와 comment 분리해서 생각한다면 service에 있는 코드들 더 간결하게 줄일 수 있음.
