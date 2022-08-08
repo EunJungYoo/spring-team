@@ -1,6 +1,7 @@
 package com.example.demo.domain;
 
 import com.example.demo.domain.dto.PostRequestDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,7 +17,7 @@ import java.util.List;
 public class Post extends Timestamped {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "postId", nullable = false, unique = true)
     private Long postId;
 
@@ -26,6 +27,7 @@ public class Post extends Timestamped {
     @Column
     private Long likeCount = 0L;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "userId", updatable = false, nullable = false)
     private User user;
@@ -33,7 +35,12 @@ public class Post extends Timestamped {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+
+    //필수적으로 넣어야하는 필드는 아니므로, nullable = true
+    @Column(nullable = true)
+    private String imageUrl;
+
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<Comment> commentList = new ArrayList<>();
 
 
@@ -42,6 +49,7 @@ public class Post extends Timestamped {
         this.title = postRequestDto.getTitle();
         this.user = user;
         this.content = postRequestDto.getContent();
+        this.imageUrl = postRequestDto.getImageUrl();
     }
 
     public void update(PostRequestDto postRequestDto){

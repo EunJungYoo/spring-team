@@ -18,29 +18,28 @@ import java.util.List;
 public class Comment extends Timestamped{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "commentId", nullable = false, unique = true)
     private Long commentId;
 
     @Column
     private Long likeCount = 0L;
 
+
+    @ManyToOne
+    @JoinColumn(name = "userId",updatable = false)
+    @JsonIgnore
+    private User user;
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "postId",updatable = false)
     private Post post;
 
-    @ManyToOne
-    @JoinColumn(name = "userId",updatable = false)
-    private User user;
-
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy ="comment")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy ="comment")
     private List<Reply> replyList = new ArrayList<>();
-
-
 
 
     public Comment(String content, Post post, User user) {
