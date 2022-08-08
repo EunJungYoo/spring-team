@@ -52,7 +52,6 @@ public class ReplyService {
     @Transactional
     public ResponseDto<Boolean> editReply(Long replyId, ReplyRequestDto replyRequestDto, Principal principal) {
 
-//        Reply reply = replyRepository.findById(replyRequestDto.getCommentId()).get();
         Reply reply = replyRepository.findById(replyId).get();
         User user = reply.getUser();
 

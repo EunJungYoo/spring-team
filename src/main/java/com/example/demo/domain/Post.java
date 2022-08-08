@@ -9,6 +9,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -41,7 +42,7 @@ public class Post extends Timestamped {
     private String imageUrl;
 
     @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    private List<Comment> commentList = new ArrayList<>();
+    private Set<Comment> commentList;
 
 
     public Post(PostRequestDto postRequestDto, User user) {
