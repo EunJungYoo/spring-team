@@ -53,7 +53,7 @@ public class JWTCheckFilter extends BasicAuthenticationFilter {
            SecurityContextHolder.getContext().setAuthentication(userToken);
            chain.doFilter(request,response);
        } else {
-           //에러메세지와 Status 변경
+
            RestApiException errorResponse = new RestApiException(HttpStatus.OK, "로그인이 필요합니다.");
            response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
            response.getOutputStream().write(objectMapper.writeValueAsBytes(errorResponse));

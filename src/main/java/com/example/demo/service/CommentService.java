@@ -1,10 +1,10 @@
 package com.example.demo.service;
 
-import com.example.demo.domain.dto.CommentRequestDto;
-import com.example.demo.domain.dto.ResponseDto;
 import com.example.demo.domain.Comment;
 import com.example.demo.domain.Post;
 import com.example.demo.domain.User;
+import com.example.demo.domain.dto.CommentRequestDto;
+import com.example.demo.domain.dto.ResponseDto;
 import com.example.demo.repository.CommentRepository;
 import com.example.demo.repository.PostRepository;
 import com.example.demo.repository.UserRepository;
@@ -24,6 +24,7 @@ public class CommentService {
     private final AuthValidator authValidator;
 
 
+    @Autowired
     public CommentService(CommentRepository commentRepository,
                           PostRepository postRepository,
                           UserRepository userRepository,
