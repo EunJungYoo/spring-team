@@ -18,6 +18,7 @@ public class Post extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "postId", nullable = false, unique = true)
     private Long postId;
 
     @Column(nullable = false, length = 31)
@@ -26,13 +27,14 @@ public class Post extends Timestamped {
     @Column
     private Long likeCount = 0L;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "userId", updatable = false, nullable = false)
-    @JsonIgnore
     private User user;
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
+
 
     //필수적으로 넣어야하는 필드는 아니므로, nullable = true
     @Column(nullable = true)

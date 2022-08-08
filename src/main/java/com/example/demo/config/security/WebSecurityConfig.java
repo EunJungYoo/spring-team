@@ -41,6 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/users/**").permitAll()
                 .antMatchers("/api/posts/**").permitAll()
                 .antMatchers("/api/comments/**").permitAll()
+                .antMatchers("/api/replys/**").permitAll() //기능 구현후 1차(무한루프) 오류 수정후 Reply GET 오류 발생하여 추가
 
                 .anyRequest().authenticated()
                 .and()

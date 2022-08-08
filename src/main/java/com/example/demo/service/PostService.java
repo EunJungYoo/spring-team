@@ -30,6 +30,8 @@ public class PostService {
     private final AmazonS3Service amazonS3Service;
     private final String amazonS3Domain = "https://springblog.s3.ap-northeast-2.amazonaws.com/";
 
+
+
     @Autowired
     public PostService(PostRepository postRepository, UserRepository userRepository,AuthValidator authValidator,
                        AmazonS3Service amazonS3Service) {
@@ -65,6 +67,7 @@ public class PostService {
         return ResponseDto.success(postRepository.save(post));
     }
 
+
     @Transactional
     public ResponseDto<Post> editPost(Long id, PostRequestDto postRequestDto, Principal principal) {
         Post post = postRepository.findById(id).get();
@@ -78,6 +81,7 @@ public class PostService {
 
     }
 
+
     @Transactional
     public ResponseDto<String> deletePost(Long id, Principal principal) {
         Post post = postRepository.findById(id).get();
@@ -90,4 +94,5 @@ public class PostService {
         } else throw new IllegalArgumentException("게시물을 삭제할 권한이 없습니다.");
 
     }
+
 }
