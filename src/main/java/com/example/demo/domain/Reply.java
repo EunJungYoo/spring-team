@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Entity
 //대댓글 수정등의 기능 사용을 위해 Setter추가
 @Setter
-public class Reply {
+public class Reply extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
