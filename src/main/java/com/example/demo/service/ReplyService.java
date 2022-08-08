@@ -48,11 +48,12 @@ public class ReplyService {
 
         return ResponseDto.success(replyRepository.save(reply));
     }
-
+    //수정 관련
     @Transactional
     public ResponseDto<Boolean> editReply(Long replyId, ReplyRequestDto replyRequestDto, Principal principal) {
 
-        Reply reply = replyRepository.findById(replyRequestDto.getCommentId()).get();
+//        Reply reply = replyRepository.findById(replyRequestDto.getCommentId()).get();
+        Reply reply = replyRepository.findById(replyId).get();
         User user = reply.getUser();
 
         boolean isWriter = authValidator.isWriter(user, principal);
@@ -61,7 +62,7 @@ public class ReplyService {
             return ResponseDto.success(reply.update(replyRequestDto));
         } else throw new IllegalArgumentException("댓글을 수정할 권한이 없습니다.");
     }
-
+    //삭제 관련
     @Transactional
     public ResponseDto<String> deleteReply(Long replyId, Principal principal) {
         Reply reply = replyRepository.findById(replyId).get();
