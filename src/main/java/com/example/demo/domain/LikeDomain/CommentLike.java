@@ -2,6 +2,7 @@ package com.example.demo.domain.LikeDomain;
 
 import com.example.demo.domain.Comment;
 import com.example.demo.domain.User;
+import com.example.demo.domain.dto.likeDto.CommentLikeDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,4 +30,8 @@ public class CommentLike {
     private Comment comment;
 
 
+    public CommentLike(CommentLikeDto commentLikeDto) {
+        this.user = commentLikeDto.getUser();
+        this.comment = commentLikeDto.getComment();
+    }
 }

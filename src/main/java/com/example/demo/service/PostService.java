@@ -83,11 +83,11 @@ public class PostService {
 
     @Transactional
     public String addLike(Long id, Principal principal) {
-        //포스트 레포에서 아이디값을 기준으로 포스트를 가져와서 post라는 변수명으로 씀
+        //포스트 레포에서 아이디값을 기준으로 포스트를 가져와서 post라고 값을 선언 -> 포스트 아이디를 가져옴
         Post post = postRepository.findById(id).get();
-        //유저 레포에서 String으로 된 유저아이디를 가져와서 user라는 변수명으로 씀
+        //유저 레포에서 String으로 된 유저아이디를 가져와서 user라는 변수명으로 씀 -> 유저아이디를 가져옴
         User user = userRepository.findByUserId(principal.getName());
-        //포스트라이크 디티오를 위에서 변수명 정한걸로 넣어서 새로 만들고 postLikeDto라고 값을 저장함
+        //포스트라이크 디티오를 위에서 변수명 정한걸로 넣어서 새로 만들고 postLikeDto라고 값을 저장함 -> postLikeDto 인스턴스를 만듬
         PostLikeDto postLikeDto = new PostLikeDto(user, post);
         //포스트라이크에 포스트라이크디티오를 넣어서 새로운 객체를 만들고 postLike에 값을 넣어줌
         PostLike postLike = new PostLike(postLikeDto);
@@ -102,7 +102,6 @@ public class PostService {
         post.addLike(postLikeDto);
         postLikeRepository.save(postLike);
         return "무야호~";
-
 
     }
 

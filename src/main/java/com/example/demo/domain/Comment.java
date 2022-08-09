@@ -1,6 +1,8 @@
 package com.example.demo.domain;
 
 import com.example.demo.domain.dto.CommentRequestDto;
+import com.example.demo.domain.dto.likeDto.CommentLikeDto;
+import com.example.demo.domain.dto.likeDto.PostLikeDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,7 +46,7 @@ public class Comment extends Timestamped{
 
 
     public Comment(String content, Post post, User user) {
-        super();
+//        super();
         this.content = content;
         this.user = user;
         this.post = post;
@@ -53,5 +55,17 @@ public class Comment extends Timestamped{
     public boolean update(CommentRequestDto commentRequestDto){
         this.content = commentRequestDto.getContent();
         return true;
+    }
+
+    public void addLike(CommentLikeDto commentLikeDto) {
+        this.user = commentLikeDto.getUser();
+        this.commentId = commentLikeDto.getComment().getCommentId();
+        likeCount++;
+    }
+
+    public void deleteLike(CommentLikeDto commentLikeDto) {
+        this.user = commentLikeDto.getUser();
+        this.commentId = commentLikeDto.getComment().getCommentId();
+        likeCount--;
     }
 }

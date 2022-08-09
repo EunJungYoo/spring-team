@@ -36,12 +36,12 @@ public class Post extends Timestamped {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<Comment> commentList = new ArrayList<>();
 
 
     public Post(PostRequestDto postRequestDto, User user) {
-        super();
         this.title = postRequestDto.getTitle();
         this.user = user;
         this.content = postRequestDto.getContent();
