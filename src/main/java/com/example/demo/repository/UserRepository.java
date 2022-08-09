@@ -1,6 +1,7 @@
 package com.example.demo.repository;
 
 import com.example.demo.domain.User;
+import com.example.demo.repository.SelectJPAColumnInterface.ShowMypage;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

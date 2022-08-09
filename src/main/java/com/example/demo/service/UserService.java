@@ -3,7 +3,7 @@ package com.example.demo.service;
 import com.example.demo.domain.dto.ResponseDto;
 import com.example.demo.domain.dto.SignupRequestDto;
 import com.example.demo.domain.User;
-import com.example.demo.repository.ShowMypage;
+import com.example.demo.repository.SelectJPAColumnInterface.ShowMypage;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.validator.UserSignupValidator;
 import org.springframework.beans.factory.annotation.Autowired;

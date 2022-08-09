@@ -7,7 +7,7 @@ import com.example.demo.domain.Post;
 import com.example.demo.domain.User;
 import com.example.demo.domain.dto.likeDto.PostLikeDto;
 import com.example.demo.repository.PostRepository;
-import com.example.demo.repository.ShowPost;
+import com.example.demo.repository.SelectJPAColumnInterface.ShowPost;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.repository.likeRepository.PostLikeRepository;
 import com.example.demo.domain.imageDomain.AwsS3;
