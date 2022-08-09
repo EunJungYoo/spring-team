@@ -103,7 +103,7 @@ public class AmazonS3Service {
             -> 만약, 게시글리스트에 imageUrl과 같은 파일이 S3에 없다면 이 파일은 삭제!
             -> 현재 사용중이지 않다는 증거이기 때문
      */
-    @Scheduled(cron = "0 0 1 * * *") // 오전 2시 5분
+    @Scheduled(cron = "0 0 1 * * *") // 오전 1시
     public void remove() throws InterruptedException {
 
         //1단계: S3에 저장된 모든 파일리스트 불러오기
