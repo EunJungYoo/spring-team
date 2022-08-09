@@ -97,11 +97,11 @@ public class PostService {
             postLikeRepository.deleteByPostAndUser(post, user);
             //포스트클래스에 deleteLike라는 함수를 가져옴 파라미터에 postLikeDto를 넣음 이건 post가서 다시 봐 준철아.
             post.deleteLike(postLikeDto);
-            return "삭제됨";
+            return "좋아요 취소되었습니다.";
         }
         post.addLike(postLikeDto);
         postLikeRepository.save(postLike);
-        return "무야호~";
+        return "좋아요 등록되었습니다.";
 
     }
 

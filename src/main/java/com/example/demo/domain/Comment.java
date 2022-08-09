@@ -2,7 +2,6 @@ package com.example.demo.domain;
 
 import com.example.demo.domain.dto.CommentRequestDto;
 import com.example.demo.domain.dto.likeDto.CommentLikeDto;
-import com.example.demo.domain.dto.likeDto.PostLikeDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +28,7 @@ public class Comment extends Timestamped{
 
     @ManyToOne
     @JoinColumn(name = "postId",updatable = false)
+    @JsonIgnore
     private Post post;
 
     @JsonIgnore
@@ -46,7 +46,6 @@ public class Comment extends Timestamped{
 
 
     public Comment(String content, Post post, User user) {
-//        super();
         this.content = content;
         this.user = user;
         this.post = post;
