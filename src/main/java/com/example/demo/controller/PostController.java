@@ -58,4 +58,10 @@ public class PostController {
         return postService.deletePost(id, principal);
     }
 
+    //좋아요 등록
+    @GetMapping("/api/posts/addlikes/{id}")
+    public String addLike(@PathVariable Long id, Principal principal) {
+        return postService.addLike(id, principal);
+    }
+
 }

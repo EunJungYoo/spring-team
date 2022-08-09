@@ -1,6 +1,7 @@
 package com.example.demo.domain;
 
 import com.example.demo.domain.dto.CommentRequestDto;
+import com.example.demo.domain.dto.likeDto.CommentLikeDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,15 +26,17 @@ public class Comment extends Timestamped{
     @Column
     private Long likeCount = 0L;
 
-
-    @ManyToOne
-    @JoinColumn(name = "userId",updatable = false)
-    @JsonIgnore
-    private User user;
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "postId",updatable = false)
+    @JsonIgnore
     private Post post;
+
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "userId",updatable = false)
+    private User user;
+
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
@@ -43,7 +46,6 @@ public class Comment extends Timestamped{
 
 
     public Comment(String content, Post post, User user) {
-        super();
         this.content = content;
         this.user = user;
         this.post = post;
@@ -52,5 +54,17 @@ public class Comment extends Timestamped{
     public boolean update(CommentRequestDto commentRequestDto){
         this.content = commentRequestDto.getContent();
         return true;
+    }
+
+    public void addLike(CommentLikeDto commentLikeDto) {
+        this.user = commentLikeDto.getUser();
+        this.commentId = commentLikeDto.getComment().getCommentId();
+        likeCount++;
+    }
+
+    public void deleteLike(CommentLikeDto commentLikeDto) {
+        this.user = commentLikeDto.getUser();
+        this.commentId = commentLikeDto.getComment().getCommentId();
+        likeCount--;
     }
 }

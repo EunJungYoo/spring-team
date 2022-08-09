@@ -43,6 +43,9 @@ public class User {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy="user")
     private Set<PostLike> postLikeList;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy="user")
+    private Set<ReplyLike> replyLikeList;
+
     @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "userId", foreignKey = @ForeignKey(name = "userId"))

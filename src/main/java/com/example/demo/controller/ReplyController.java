@@ -45,4 +45,13 @@ public class ReplyController {
     public ResponseDto<String> deleteReply(@PathVariable Long replyId, Principal principal){
         return replyService.deleteReply(replyId, principal);
     }
+
+    //좋아요 등록
+    @GetMapping("/api/auth/reply/like/{id}")
+    public String addLike(@PathVariable Long id, Principal principal) {
+        return replyService.addLike(id, principal);
+    }
+
+
+
 }

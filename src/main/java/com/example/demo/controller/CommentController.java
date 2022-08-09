@@ -45,5 +45,10 @@ public class CommentController {
         return commentService.deleteComment(commentId, principal);
     }
 
+    //좋아요 등록, 삭제 ->get
+    @GetMapping("/api/comments/likes/{id}")
+    public String addLike(@PathVariable Long id, Principal principal) {
+        return commentService.addLike(id, principal);
+    }
 
 }
