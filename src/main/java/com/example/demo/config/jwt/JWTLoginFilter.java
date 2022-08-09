@@ -69,14 +69,17 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
         }
     }
 
+    //자바 버전 오류로 인하여 추가한 문구
     @Override
-    protected void successfulAuthentication(HttpServletRequest request,
-                                            HttpServletResponse response,
-                                            FilterChain chain,
-                                            Authentication authResult) throws IOException, ServletException {
+    protected void successfulAuthentication(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain chain,
+            Authentication authResult) throws IOException, ServletException {
 
         UserDetailsImpl user1 = (UserDetailsImpl) authResult.getPrincipal();
         User user = user1.getUser();
+
 
         objectMapper.registerModule(new JavaTimeModule());
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);

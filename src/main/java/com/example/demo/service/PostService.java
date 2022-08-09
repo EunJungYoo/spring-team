@@ -5,16 +5,15 @@ import com.example.demo.domain.Post;
 import com.example.demo.domain.User;
 import com.example.demo.domain.dto.PostRequestDto;
 import com.example.demo.domain.dto.ResponseDto;
-import com.example.demo.domain.dto.likeDto.PostLikeDto;
 import com.example.demo.domain.imageDomain.AwsS3;
 import com.example.demo.repository.PostRepository;
 import com.example.demo.repository.ShowPost;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.repository.likeRepo.PostLikeRepository;
 import com.example.demo.service.fileUpload.AmazonS3Service;
 import com.example.demo.service.validator.AuthValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,16 +28,23 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class PostService {
 
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final AuthValidator authValidator;
     private final AmazonS3Service amazonS3Service;
-
-    private final PostLikeRepository postLikeRepository;
     private final String amazonS3Domain = "https://springblog.s3.ap-northeast-2.amazonaws.com/";
+
+
+    @Autowired
+    public PostService(PostRepository postRepository, UserRepository userRepository,AuthValidator authValidator,
+                       AmazonS3Service amazonS3Service) {
+        this.postRepository = postRepository;
+        this.userRepository = userRepository;
+        this.authValidator = authValidator;
+        this.amazonS3Service = amazonS3Service;
+    }
 
 
 
@@ -67,6 +73,7 @@ public class PostService {
         return ResponseDto.success(postRepository.save(post));
     }
 
+
     @Transactional
     public ResponseDto<Post> editPost(Long id, PostRequestDto postRequestDto, Principal principal) {
         Post post = postRepository.findById(id).get();
@@ -80,6 +87,7 @@ public class PostService {
 
     }
 
+
     @Transactional
     public ResponseDto<String> deletePost(Long id, Principal principal) {
         Post post = postRepository.findById(id).get();
@@ -91,7 +99,6 @@ public class PostService {
 
         } else throw new IllegalArgumentException("게시물을 삭제할 권한이 없습니다.");
     }
-
 
     /*
         매일 오전 1시
@@ -112,3 +119,4 @@ public class PostService {
 
 
 }
+
