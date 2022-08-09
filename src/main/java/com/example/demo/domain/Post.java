@@ -1,5 +1,6 @@
 package com.example.demo.domain;
 
+import com.example.demo.domain.LikeDomain.PostLike;
 import com.example.demo.domain.dto.PostRequestDto;
 import com.example.demo.domain.dto.likeDto.PostLikeDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -40,6 +42,10 @@ public class Post extends Timestamped {
 
     @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Set<Comment> commentList;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy ="post")
+    private Set<PostLike> postLikeList;
 
     public Post(PostRequestDto postRequestDto, User user) {
         this.title = postRequestDto.getTitle();

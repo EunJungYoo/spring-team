@@ -12,11 +12,13 @@ import com.example.demo.repository.ReplyRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.repository.likeRepository.ReplyLikeRepository;
 import com.example.demo.service.validator.AuthValidator;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 
+@RequiredArgsConstructor
 @Service
 public class ReplyService {
     private final CommentRepository commentRepository;
@@ -25,14 +27,6 @@ public class ReplyService {
     private final ReplyRepository replyRepository;
     private final UserRepository userRepository;
     private final AuthValidator authValidator;
-
-    public ReplyService(CommentRepository commentRepository, ReplyLikeRepository replyLikeRepository, ReplyRepository replyRepository, UserRepository userRepository, AuthValidator authValidator) {
-        this.commentRepository = commentRepository;
-        this.replyLikeRepository = replyLikeRepository;
-        this.replyRepository = replyRepository;
-        this.userRepository = userRepository;
-        this.authValidator = authValidator;
-    }
 
     //조회 관련
     public ResponseDto<Object> getReplyList(Long id) {
@@ -83,15 +77,20 @@ public class ReplyService {
     public String addLike(Long id, Principal principal) {
         Reply reply = replyRepository.findById(id).get();
         User user = userRepository.findByUserId(principal.getName());
+
         ReplyLikeDto replyLikeDto = new ReplyLikeDto(user, reply);
         ReplyLike replyLike = new ReplyLike(replyLikeDto);
+
         if(replyLikeRepository.findByReplyAndUser(reply, user).isPresent()) {
             replyLikeRepository.deleteByReplyAndUser(reply, user);
             reply.deleteLike(replyLikeDto);
+
             return "좋아요 취소됨";
         }
+
         reply.addLike(replyLikeDto);
         replyLikeRepository.save(replyLike);
+
         return "좋아요 저장됨";
 
     }

@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.LikeDomain.PostLike;
+import com.example.demo.domain.dto.LikeResponseDto;
 import com.example.demo.domain.dto.PostRequestDto;
 import com.example.demo.domain.dto.ResponseDto;
 import com.example.demo.domain.Post;
@@ -13,6 +14,7 @@ import com.example.demo.repository.likeRepository.PostLikeRepository;
 import com.example.demo.domain.imageDomain.AwsS3;
 import com.example.demo.service.fileUpload.AmazonS3Service;
 import com.example.demo.service.validator.AuthValidator;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -24,11 +26,13 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class PostService {
 
     private final PostRepository postRepository;
@@ -38,21 +42,17 @@ public class PostService {
     private final AmazonS3Service amazonS3Service;
     private final String amazonS3Domain = "https://springblog.s3.ap-northeast-2.amazonaws.com/";
 
-
-    @Autowired
-    public PostService(PostRepository postRepository, PostLikeRepository postLikeRepository, UserRepository userRepository, AuthValidator authValidator, AmazonS3Service amazonS3Service) {
-
-        this.postRepository = postRepository;
-        this.postLikeRepository = postLikeRepository;
-        this.userRepository = userRepository;
-        this.authValidator = authValidator;
-        this.amazonS3Service = amazonS3Service;
-    }
-
     @Transactional
     public ResponseDto<?> getPostList() {
+        int count = 0;
         List<ShowPost> postList = postRepository.findAllByOrderByCreatedAtDesc();
-        return ResponseDto.success(postList);
+
+        for(ShowPost post : postList){
+            count += post.getLikeCount();
+        }
+        LikeResponseDto responseDto = new LikeResponseDto(postList, count);
+
+        return ResponseDto.success(responseDto);
     }
 
     @Transactional

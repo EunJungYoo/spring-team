@@ -6,25 +6,19 @@ import com.example.demo.domain.User;
 import com.example.demo.repository.SelectJPAColumnInterface.ShowMypage;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.validator.UserSignupValidator;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 
-
+@RequiredArgsConstructor
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
     private final UserSignupValidator userSignupValidator;
-
-
-    @Autowired
-    public UserService(UserRepository userRepository, UserSignupValidator userSignupValidator) {
-        this.userRepository = userRepository;
-        this.userSignupValidator = userSignupValidator;
-    }
 
     @Transactional
     public ResponseDto<Boolean> checkIDDuplicate(String userId) {

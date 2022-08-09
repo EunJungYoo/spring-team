@@ -1,5 +1,7 @@
 package com.example.demo.domain;
 
+import com.example.demo.domain.LikeDomain.CommentLike;
+import com.example.demo.domain.LikeDomain.ReplyLike;
 import com.example.demo.domain.dto.CommentRequestDto;
 import com.example.demo.domain.dto.likeDto.CommentLikeDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -10,6 +12,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 @Getter
@@ -41,8 +44,12 @@ public class Comment extends Timestamped{
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy ="comment")
-    private List<Reply> replyList = new ArrayList<>();
+    private Set<CommentLike> commentLikeList;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy ="comment")
+    private Set<Reply> replyList;
 
 
     public Comment(String content, Post post, User user) {

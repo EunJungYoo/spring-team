@@ -77,15 +77,20 @@ public class CommentService {
     public String addLike(Long id, Principal principal) {
         Comment comment = commentRepository.findById(id).get();
         User user = userRepository.findByUserId(principal.getName());
+
         CommentLikeDto commentLikeDto = new CommentLikeDto(user, comment);
         CommentLike commentLike = new CommentLike(commentLikeDto);
+
         if (commentLikeRepository.findByCommentAndUser(comment, user).isPresent()) {
             commentLikeRepository.deleteByCommentAndUser(comment, user);
             comment.deleteLike(commentLikeDto);
+
             return "좋아요 취소되었습니다.";
         }
+
         comment.addLike(commentLikeDto);
         commentLikeRepository.save(commentLike);
+
         return "좋아요 등록되었습니다.";
     }
 }

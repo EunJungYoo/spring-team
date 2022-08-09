@@ -1,5 +1,6 @@
 package com.example.demo.domain;
 
+import com.example.demo.domain.LikeDomain.ReplyLike;
 import com.example.demo.domain.dto.ReplyRequestDto;
 import com.example.demo.domain.dto.likeDto.ReplyLikeDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -9,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.*;
 import javax.persistence.*;
+import java.util.List;
 
 @Builder
 @Getter
@@ -35,6 +37,10 @@ public class Reply extends Timestamped {
 
     @Column
     private Long likeCount = 0L;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy ="reply")
+    private List<ReplyLike> replyLikeList;
 
     @Column
     private String content;
