@@ -9,6 +9,8 @@ public interface ShowPost {
     String getContent();
     UserSummaryInfo getUser();
     Long getLikeCount();
+
+    String getImageUrl();
     LocalDateTime getCreatedAt();
     LocalDateTime getModifiedAt();
 

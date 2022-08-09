@@ -2,12 +2,11 @@ package com.example.demo.domain;
 
 import com.example.demo.domain.LikeDomain.CommentLike;
 import com.example.demo.domain.LikeDomain.PostLike;
+import com.example.demo.domain.LikeDomain.ReplyLike;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -29,20 +28,26 @@ public class User {
     @Column(nullable = false, length = 255)
     private String password;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="user")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy="user")
     private Set<Comment> commentList;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="user")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy="user")
     private Set<Post> postList;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="user")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy="user")
+    private Set<Reply> replyList;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy="user")
     private Set<CommentLike> commentLikeList;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="user")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy="user")
     private Set<PostLike> postLikeList;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy="user")
+    private Set<ReplyLike> replyLikeList;
+
     @JsonIgnore
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "userId", foreignKey = @ForeignKey(name = "userId"))
     private Set<Authority> authorities;
 

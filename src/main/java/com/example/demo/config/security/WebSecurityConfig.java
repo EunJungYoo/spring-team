@@ -42,7 +42,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/posts/**").permitAll()
                 .antMatchers("/api/comments/**").permitAll()
                 .antMatchers("/api/replys/**").permitAll()
-
                 .anyRequest().authenticated()
                 .and()
                 .addFilterAt(loginFilter, UsernamePasswordAuthenticationFilter.class)

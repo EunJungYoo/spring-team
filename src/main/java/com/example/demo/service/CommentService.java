@@ -1,25 +1,24 @@
 package com.example.demo.service;
 
+
 import com.example.demo.domain.LikeDomain.CommentLike;
-import com.example.demo.domain.LikeDomain.PostLike;
 import com.example.demo.domain.dto.CommentRequestDto;
 import com.example.demo.domain.dto.ResponseDto;
 import com.example.demo.domain.Comment;
 import com.example.demo.domain.Post;
 import com.example.demo.domain.User;
 import com.example.demo.domain.dto.likeDto.CommentLikeDto;
-import com.example.demo.domain.dto.likeDto.PostLikeDto;
 import com.example.demo.repository.CommentRepository;
 import com.example.demo.repository.PostRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.repository.likeRepository.CommentLikeRepository;
 import com.example.demo.service.validator.AuthValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service

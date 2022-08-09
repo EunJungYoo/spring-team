@@ -6,6 +6,8 @@ import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @RestController()
 public class UserController {
 
@@ -28,6 +30,19 @@ public class UserController {
         userService.signUp(signupRequestDto);
         return "redirect:/index.html";
     }
+
+    // 마이페이지
+    @GetMapping("api/auth/users")
+    public ResponseDto<?> getMyInfo(Principal principal){
+        return userService.getMyInfo(principal);
+    }
+
+    // 회원 탈퇴
+    @DeleteMapping("api/auth/users")
+    public ResponseDto<String> deleteAccount(Principal principal){
+        return userService.deleteAccount(principal);
+    }
+
 }
 
 

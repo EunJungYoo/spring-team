@@ -69,6 +69,7 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
         }
     }
 
+    //자바 버전 오류로 인하여 추가한 문구
     @Override
     protected void successfulAuthentication(
             HttpServletRequest request,

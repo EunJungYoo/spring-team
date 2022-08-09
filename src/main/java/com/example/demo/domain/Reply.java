@@ -1,14 +1,13 @@
 package com.example.demo.domain;
 
 import com.example.demo.domain.dto.ReplyRequestDto;
-import com.example.demo.domain.dto.likeDto.PostLikeDto;
 import com.example.demo.domain.dto.likeDto.ReplyLikeDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
+import lombok.*;
 import javax.persistence.*;
 
 @Builder
@@ -16,20 +15,22 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Reply {
+//대댓글 수정등의 기능 사용을 위해 Setter추가
+@Setter
+public class Reply extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long replyId;
 
-    @JsonIgnore
+    @JsonIgnore//무한 참조로 인하여 추가
     @JoinColumn(name = "member_id", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private User user;
 
-    @JsonIgnore
     @JoinColumn(name = "comment_id", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JsonIgnore
     private Comment comment;
 
     @Column
@@ -61,4 +62,5 @@ public class Reply {
         this.replyId = replyLikeDto.getReply().getReplyId();
         likeCount--;
     }
+
 }

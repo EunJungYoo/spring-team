@@ -31,18 +31,18 @@ public class Comment extends Timestamped{
     @JsonIgnore
     private Post post;
 
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "userId",updatable = false)
     private User user;
+
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy ="comment")
     private List<Reply> replyList = new ArrayList<>();
-
-
 
 
     public Comment(String content, Post post, User user) {

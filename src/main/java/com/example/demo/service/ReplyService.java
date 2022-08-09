@@ -21,6 +21,7 @@ import java.security.Principal;
 public class ReplyService {
     private final CommentRepository commentRepository;
     private final ReplyLikeRepository replyLikeRepository;
+
     private final ReplyRepository replyRepository;
     private final UserRepository userRepository;
     private final AuthValidator authValidator;
