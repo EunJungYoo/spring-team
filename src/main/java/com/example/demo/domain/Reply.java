@@ -1,11 +1,16 @@
 package com.example.demo.domain;
 
+import com.example.demo.domain.LikeDomain.ReplyLike;
 import com.example.demo.domain.dto.ReplyRequestDto;
+import com.example.demo.domain.dto.likeDto.ReplyLikeDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.*;
-
-
 import javax.persistence.*;
+import java.util.List;
 
 @Builder
 @Getter
@@ -14,24 +19,28 @@ import javax.persistence.*;
 @Entity
 //대댓글 수정등의 기능 사용을 위해 Setter추가
 @Setter
-public class Reply {
+public class Reply extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long replyId;
 
     @JsonIgnore//무한 참조로 인하여 추가
     @JoinColumn(name = "member_id", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private User user;
 
     @JoinColumn(name = "comment_id", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JsonIgnore
     private Comment comment;
 
     @Column
     private Long likeCount = 0L;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy ="reply")
+    private List<ReplyLike> replyLikeList;
 
     @Column
     private String content;
@@ -47,4 +56,17 @@ public class Reply {
         this.content = replyRequestDto.getContent();
         return true;
     }
+
+    public void addLike(ReplyLikeDto replyLikeDto) {
+        this.user = replyLikeDto.getUser();
+        this.replyId = replyLikeDto.getReply().getReplyId();
+        likeCount++;
+    }
+
+    public void deleteLike(ReplyLikeDto replyLikeDto) {
+        this.user = replyLikeDto.getUser();
+        this.replyId = replyLikeDto.getReply().getReplyId();
+        likeCount--;
+    }
+
 }

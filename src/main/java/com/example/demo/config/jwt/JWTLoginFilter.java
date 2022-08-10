@@ -80,7 +80,6 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
         UserDetailsImpl user1 = (UserDetailsImpl) authResult.getPrincipal();
         User user = user1.getUser();
 
-
         objectMapper.registerModule(new JavaTimeModule());
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
@@ -91,6 +90,7 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
         response.getOutputStream().write(objectMapper.writeValueAsBytes(user.getUserId()));
 
     }
+
 
     @Override
     protected void unsuccessfulAuthentication(

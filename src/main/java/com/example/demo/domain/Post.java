@@ -1,14 +1,15 @@
 package com.example.demo.domain;
 
+import com.example.demo.domain.LikeDomain.PostLike;
 import com.example.demo.domain.dto.PostRequestDto;
+import com.example.demo.domain.dto.likeDto.PostLikeDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -35,17 +36,21 @@ public class Post extends Timestamped {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
+    @Column
+    private int commentCount = 0;
 
     //필수적으로 넣어야하는 필드는 아니므로, nullable = true
     @Column(nullable = true)
     private String imageUrl;
 
     @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    private List<Comment> commentList = new ArrayList<>();
+    private Set<Comment> commentList;
 
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy ="post")
+    private Set<PostLike> postLikeList;
 
     public Post(PostRequestDto postRequestDto, User user) {
-        super();
         this.title = postRequestDto.getTitle();
         this.user = user;
         this.content = postRequestDto.getContent();
@@ -58,7 +63,15 @@ public class Post extends Timestamped {
     }
 
 
+    public void addLike(PostLikeDto postLikeDto) {
+        this.user = postLikeDto.getUser();
+        this.postId = postLikeDto.getPost().getPostId();
+        likeCount++;
+    }
 
-
-
+    public void deleteLike(PostLikeDto postLikeDto) {
+        this.user = postLikeDto.getUser();
+        this.postId = postLikeDto.getPost().getPostId();
+        likeCount--;
+    }
 }
