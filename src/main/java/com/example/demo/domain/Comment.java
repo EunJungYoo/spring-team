@@ -56,6 +56,7 @@ public class Comment extends Timestamped{
         this.content = content;
         this.user = user;
         this.post = post;
+        this.post.setCommentCount(this.post.getCommentCount() + 1);
     }
 
     public boolean update(CommentRequestDto commentRequestDto){

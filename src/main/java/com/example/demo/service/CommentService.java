@@ -63,7 +63,10 @@ public class CommentService {
     @Transactional
     public ResponseDto<String> deleteComment(Long commentId, Principal principal) {
         Comment comment = commentRepository.findById(commentId).get();
+        Post post = postRepository.findById(comment.getPost().getPostId()).get();
         User user = comment.getUser();
+
+        post.setCommentCount(post.getCommentCount() - 1);
 
         boolean isWriter = authValidator.isWriter(user, principal);
 

@@ -36,6 +36,9 @@ public class Post extends Timestamped {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
+    @Column
+    private int commentCount = 0;
+
     //필수적으로 넣어야하는 필드는 아니므로, nullable = true
     @Column(nullable = true)
     private String imageUrl;

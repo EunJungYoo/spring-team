@@ -44,20 +44,15 @@ public class PostService {
 
     @Transactional
     public ResponseDto<?> getPostList() {
-        int count = 0;
         List<ShowPost> postList = postRepository.findAllByOrderByCreatedAtDesc();
 
-        for(ShowPost post : postList){
-            count += post.getLikeCount();
-        }
-        LikeResponseDto responseDto = new LikeResponseDto(postList, count);
-
-        return ResponseDto.success(responseDto);
+        return ResponseDto.success(postList);
     }
 
     @Transactional
     public ResponseDto<?> getPost(Long id) {
-        Post post = postRepository.findById(id).get();
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
         return ResponseDto.success(post);
     }
 
