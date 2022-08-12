@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
 @RestControllerAdvice
 public class RestApiExceptionHandler {
 
-    @ExceptionHandler(value = {IllegalArgumentException.class,
+            @ExceptionHandler(value = {IllegalArgumentException.class,
             NullPointerException.class,
             NoSuchElementException.class})
 
